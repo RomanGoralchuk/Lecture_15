@@ -4,7 +4,9 @@ import by.itacademy.javaenterprise.goralchuk.entity.Patient;
 import by.itacademy.javaenterprise.goralchuk.entity.PatientSex;
 import org.junit.*;
 import org.junit.rules.MethodRule;
+import org.junit.rules.TestWatcher;
 import org.junit.rules.TestWatchman;
+import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +27,15 @@ public class PatientDAOImplTest {
     private static NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(PatientDAOImplTest.class);
 
-    @Rule public MethodRule watchman = new TestWatchman() {
-        public void starting(FrameworkMethod method) {
-            logger.info("Test {} is running.", method.getName());
+    @Rule
+    public TestWatcher watchman= new TestWatcher() {
+        @Override
+        protected void failed(Throwable e, Description description) {
+            logger.info("Test failed: " + description);
         }
-        public void succeeded(FrameworkMethod method) {
-            logger.info("Test {} succesfully run.", method.getName());
-        }
-        public void failed(Throwable e, FrameworkMethod method) {
-            logger.error("Test {} failed with {} reason.",
-                    method.getName(), e.getMessage());
+        @Override
+        protected void succeeded(Description description) {
+            logger.info("Test successes: " + description);
         }
     };
 
