@@ -17,32 +17,27 @@ import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
 public class PatientDAOImplTestMock {
 
     private static PatientDAOImpl patientDAO;
     private static JdbcTemplate jdbcTemplate;
     private static NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    private static DataSource dataSource;
     private static final Logger logger = LoggerFactory.getLogger(PatientDAOImplTestMock.class);
 
     @Rule
-    public TestWatcher watchman= new TestWatcher() {
+    public TestWatcher watchman = new TestWatcher() {
         @Override
         protected void failed(Throwable e, Description description) {
             logger.info("Test failed: " + description);
         }
+
         @Override
         protected void succeeded(Description description) {
             logger.info("Test successes: " + description);
