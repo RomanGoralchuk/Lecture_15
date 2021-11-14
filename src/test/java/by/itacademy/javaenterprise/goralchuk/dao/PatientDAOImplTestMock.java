@@ -2,15 +2,11 @@ package by.itacademy.javaenterprise.goralchuk.dao;
 
 import by.itacademy.javaenterprise.goralchuk.entity.Patient;
 import by.itacademy.javaenterprise.goralchuk.entity.PatientSex;
-import org.flywaydb.core.Flyway;
 import org.junit.*;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.RecoverableDataAccessException;
@@ -18,14 +14,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.sql.DataSource;
 import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 public class PatientDAOImplTestMock {
-
     private static PatientDAOImpl patientDAO;
     private static JdbcTemplate jdbcTemplate;
     private static NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -71,7 +65,7 @@ public class PatientDAOImplTestMock {
         Long expectedId = 10L;
         Patient patientTest = new Patient();
         patientTest.setId(actualId);
-        when(namedParameterJdbcTemplate.queryForObject(Mockito.anyString(), Mockito.<Map<String, ?>>any(),
+        when(namedParameterJdbcTemplate.queryForObject(anyString(), Mockito.<Map<String, ?>>any(),
                 ArgumentMatchers.<RowMapper<Patient>>any())).thenReturn(patientTest);
         assertEquals(expectedId, patientTest.getId());
     }
