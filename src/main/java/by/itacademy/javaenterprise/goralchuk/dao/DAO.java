@@ -8,7 +8,7 @@ public interface DAO<T> {
 
     T get(long id);
 
-    void save(T t);
+    int save(T t);
 
     void update(T t) throws SQLException;
 

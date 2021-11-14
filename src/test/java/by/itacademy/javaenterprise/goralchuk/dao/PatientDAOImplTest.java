@@ -2,29 +2,22 @@ package by.itacademy.javaenterprise.goralchuk.dao;
 
 import by.itacademy.javaenterprise.goralchuk.entity.Patient;
 import by.itacademy.javaenterprise.goralchuk.entity.PatientSex;
+import org.flywaydb.core.Flyway;
 import org.junit.*;
-import org.junit.rules.MethodRule;
 import org.junit.rules.TestWatcher;
-import org.junit.rules.TestWatchman;
 import org.junit.runner.Description;
-import org.junit.runners.model.FrameworkMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
 import javax.sql.DataSource;
-
 import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class PatientDAOImplTest {
     private static PatientDAOImpl patientDAO;
     private static DataSource dataSource;
-    private static JdbcTemplate jdbcTemplate;
-    private static NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private static final Logger logger = LoggerFactory.getLogger(PatientDAOImplTest.class);
 
     @Rule
@@ -45,8 +38,13 @@ public class PatientDAOImplTest {
                 "jdbc:mariadb://127.0.0.1:3306/hospital?useUnicode=true&characterEncoding=UTF-8",
                 "user",
                 "userpass");
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
+        Flyway flyway = Flyway.configure()
+                .dataSource(dataSource)
+                .locations("classpath:database/migration")
+                .load();
+        flyway.migrate();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        NamedParameterJdbcTemplate namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(jdbcTemplate);
         patientDAO = new PatientDAOImpl(jdbcTemplate, namedParameterJdbcTemplate);
     }
 

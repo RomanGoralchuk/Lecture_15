@@ -28,7 +28,8 @@ public class MainTest {
 
         logger.info("Test response to the request: " + patientsDAO.get(2));
         logger.info("Test response to the request: " + patientsDAO.findAllPersons());
-        patientsDAO.save(new Patient("Santa", "Claus", PatientSex.M, java.sql.Date.valueOf("1920-12-24")));
+        logger.info("add Patient " + patientsDAO.save(
+                new Patient("Santa", "Claus", PatientSex.M, java.sql.Date.valueOf("1920-12-24"))));
         logger.info("Test response to the request: " + patientsDAO.findBySexPatients(PatientSex.M));
 
         context.close();

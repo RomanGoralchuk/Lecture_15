@@ -80,9 +80,9 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public void save(Patient patient) {
+    public int save(Patient patient) {
         try {
-            jdbcTemplate.update(SAVE_PATIENT,
+            return jdbcTemplate.update(SAVE_PATIENT,
                     patient.getName(),
                     patient.getSurname(),
                     patient.getPatientSex().toString(),
@@ -90,6 +90,7 @@ public class PatientDAOImpl implements PatientDAO {
             );
         } catch (Exception ex) {
             logger.error("" + new SQLException(ex.getMessage()));
+            return 0;
         }
     }
 
